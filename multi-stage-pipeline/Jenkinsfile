@@ -1,1 +1,28 @@
+pipeline {
+    agent {
+        docker { image 'alpine:latest' }
+    }
+    stages {
+        stage('1. Build Stage') {
+            steps {
+                echo '🏗️ Compiling the source code...'
+                sh 'echo "Hello, World! The application is compiled." > build_output.txt'
+            }
+        }
+        stage('2. Test Stage') {
+            steps {
+                echo '🧪 Running unit tests...'
+                sh 'grep -q "Hello, World!" build_output.txt'
+                echo '✅ All tests passed successfully!'
+            }
+        }
+        stage('3. Deploy Stage') {
+            steps {
+                echo '🚀 Deploying to the production environment...'
+                sh 'cat build_output.txt'
+                echo '🎉 Deployment complete!'
+            }
+        }
+    }
+}
 
